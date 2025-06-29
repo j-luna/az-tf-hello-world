@@ -22,14 +22,12 @@ resource "azurerm_resource_group" "rg" {
 }
 
 
-resource "azurerm_app_service_plan" "app_plan" {
+resource "azurerm_service_plan" "app_plan" {
   name                = var.app_service_plan_name
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
-  sku {
-    tier = "Free"
-    size = "F1"
-  }
+  os_type             = "Linux"
+  sku_name            = "F1"
 }
 
 resource "azurerm_linux_web_app" "webapp" {
