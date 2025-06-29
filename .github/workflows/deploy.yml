@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  AZURE_WEBAPP_NAME: app-hello-world   # Change this
+  AZURE_WEBAPP_NAME: app-hello-world-18032701   # Change this
   AZURE_RESOURCE_GROUP: rg-hello-world # Change this
   NODE_VERSION: '20.x'
 
