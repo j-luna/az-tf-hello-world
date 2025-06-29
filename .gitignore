@@ -1,0 +1,19 @@
+# Node.js
+node_modules/
+app.zip
+
+# Terraform
+infra/.terraform/
+infra/.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.*
+*.tfstate
+*.tfstate.*
+
+# System
+*.log
+.DS_Store
+
+# Secrets (optional, if ever used)
+.env
+*.pem
