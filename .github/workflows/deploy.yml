@@ -1,0 +1,60 @@
+name: Deploy Node.js Hello World app
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AZURE_WEBAPP_NAME: app-hello-world   # Change this
+  AZURE_RESOURCE_GROUP: rg-hello-world # Change this
+  NODE_VERSION: '20.x'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout code
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Set up Node
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: npm install
+
+      # Terraform Init/Apply
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        working-directory: ./infra
+        run: terraform init
+
+      - name: Terraform Apply
+        working-directory: ./infra
+        run: terraform apply -auto-approve
+
+      # Zip app for deployment
+      - name: Archive app
+        run: zip -r app.zip . -x "infra/*" ".git/*" ".github/*" "node_modules/*"
+
+      # Azure CLI Login
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Deploy app via Zip
+      - name: Deploy to Azure Web App
+        run: |
+          az webapp deploy \
+            --resource-group $AZURE_RESOURCE_GROUP \
+            --name $AZURE_WEBAPP_NAME \
+            --src-path app.zip \
+            --type zip
