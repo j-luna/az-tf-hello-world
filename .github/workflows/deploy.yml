@@ -26,8 +26,8 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Install dependencies
-        run: npm install
         working-directory: ./app
+        run: npm install
 
       # Terraform Init/Apply
       - name: Set up Terraform
