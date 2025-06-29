@@ -27,6 +27,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./app
 
       # Terraform Init/Apply
       - name: Set up Terraform
