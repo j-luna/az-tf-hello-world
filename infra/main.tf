@@ -1,21 +1,3 @@
-/*
-module "rg" {
-  source   = "git::https://github.com/j-luna/terraform-modules-azure.git//resource-group?ref=v0.0.2"
-  name     = var.resource_group_name
-  location = var.location
-}
-
-module "plan" {
-  source              = "git::https://github.com/j-luna/terraform-modules-azure.git//service-plan?ref=v0.0.2"
-  name                = var.app_service_plan_name
-  location            = var.location
-  resource_group_name = module.rg.name
-  sku_name            = var.sku_name
-  os_type             = var.os_type
-}
-*/
-
-
 resource "azurerm_resource_group" "rg" {
   name     = var.resource_group_name
   location = var.location
