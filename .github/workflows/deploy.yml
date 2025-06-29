@@ -19,6 +19,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      # Azure CLI Login
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       # Set up Node
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -44,12 +50,6 @@ jobs:
       # Zip app for deployment
       - name: Archive app
         run: zip -r app.zip . -x "infra/*" ".git/*" ".github/*" "node_modules/*"
-
-      # Azure CLI Login
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       # Deploy app via Zip
       - name: Deploy to Azure Web App
